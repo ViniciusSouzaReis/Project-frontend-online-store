@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import { Link } from 'react-router-dom';
 
 export default class Search extends Component {
   state = {
@@ -43,7 +44,6 @@ export default class Search extends Component {
           onClick={ this.handleChangeButton }
         >
           Pesquisar
-
         </button>
         {products.length === 0 ? (<span>Nenhum produto foi encontrado</span>) : (
           products.map(({ title, price, thumbnail, id }) => (
@@ -54,6 +54,12 @@ export default class Search extends Component {
             </div>
           ))
         )}
+        <Link
+          data-testid="shopping-cart-button"
+          to="/shoppingcart"
+        >
+          Carrinho de compras
+        </Link>
       </div>
     );
   }
