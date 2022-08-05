@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Search extends Component {
   state = {
     searchValue: '',
+    products: [],
   }
 
   onInputChange = ({ target }) => {
@@ -12,12 +14,14 @@ export default class Search extends Component {
     });
   }
 
-  handleChangeButton = () => {
-    console.log('oi');
+  handleChangeButton = async () => {
+    const { searchValue } = this.state;
+    const request = await getProductsFromCategoryAndQuery(searchValue);
+    this.setState({ products: request.results });
   }
 
   render() {
-    const { searchValue } = this.state;
+    const { searchValue, products } = this.state;
     return (
       <div>
         <input
@@ -41,6 +45,15 @@ export default class Search extends Component {
           Pesquisar
 
         </button>
+        {products.length === 0 ? (<span>Nenhum produto foi encontrado</span>) : (
+          products.map(({ title, price, thumbnail, id }) => (
+            <div key={ id } data-testid="product">
+              <p>{title}</p>
+              <img src={ thumbnail } alt={ title } />
+              <p>{price}</p>
+            </div>
+          ))
+        )}
       </div>
     );
   }
