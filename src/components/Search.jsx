@@ -16,8 +16,8 @@ export default class Search extends Component {
 
   handleChangeButton = async () => {
     const { searchValue } = this.state;
-    const request = await getProductsFromCategoryAndQuery(searchValue);
-    this.setState({ products: request.results });
+    const response = await getProductsFromCategoryAndQuery(searchValue);
+    this.setState({ products: response.results });
   }
 
   render() {
