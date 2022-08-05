@@ -5,11 +5,11 @@ import ShoppingCartList from './components/ShoppingCartList';
 
 export default class App extends Component {
   state = {
-    shoppingCartContent: '',
+    shoppingCartContents: '',
   }
 
   render() {
-    const { shoppingCartContent } = this.state;
+    const { shoppingCartContents } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -18,7 +18,7 @@ export default class App extends Component {
             exact
             path="/shoppingcart"
             render={
-              () => (<ShoppingCartList shoppingList={ shoppingCartContent } />)
+              () => (<ShoppingCartList shoppingList={ shoppingCartContents } />)
             }
           />
         </Switch>
