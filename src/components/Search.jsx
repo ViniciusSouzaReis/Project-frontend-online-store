@@ -7,9 +7,7 @@ export default class Search extends Component {
 
   onInputChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState({ [name]: value });
   }
 
   render() {
