@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Search from './components/Search';
+import Home from './pages/Home';
 import ShoppingCartList from './components/ShoppingCartList';
 
 export default class App extends Component {
@@ -13,7 +13,7 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={ Search } />
+          <Route exact path="/" component={ Home } />
           <Route
             exact
             path="/shoppingcart"
