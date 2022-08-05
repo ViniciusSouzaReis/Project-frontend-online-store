@@ -60,6 +60,7 @@ export default class Search extends Component {
         >
           Carrinho de compras
         </Link>
+
       </div>
     );
   }
