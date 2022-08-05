@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 import { Link } from 'react-router-dom';
 
 export default class Search extends Component {
   state = {
     searchValue: '',
+    products: [],
   }
 
   onInputChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleChangeButton = async () => {
+    const { searchValue } = this.state;
+    const response = await getProductsFromCategoryAndQuery(searchValue);
+    this.setState({ products: response.results });
   }
 
   render() {
-    const { searchValue } = this.state;
+    const { searchValue, products } = this.state;
     return (
       <div>
-        <input type="text" name="searchValue" onChange={ this.onInputChange } />
+        <input
+          type="text"
+          name="searchValue"
+          onChange={ this.onInputChange }
+          data-testid="query-input"
+        />
         {!searchValue
           && (
             <span
@@ -23,6 +38,22 @@ export default class Search extends Component {
             >
               Digite algum termo de pesquisa ou escolha uma categoria.
             </span>)}
+        <button
+          type="button"
+          data-testid="query-button"
+          onClick={ this.handleChangeButton }
+        >
+          Pesquisar
+        </button>
+        {products.length === 0 ? (<span>Nenhum produto foi encontrado</span>) : (
+          products.map(({ title, price, thumbnail, id }) => (
+            <div key={ id } data-testid="product">
+              <p>{title}</p>
+              <img src={ thumbnail } alt={ title } />
+              <p>{price}</p>
+            </div>
+          ))
+        )}
         <Link
           data-testid="shopping-cart-button"
           to="/shoppingcart"
