@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default class ProductCard extends Component {
   render() {
@@ -7,11 +8,16 @@ export default class ProductCard extends Component {
     return (
       <div>
         {products.length > 0 ? (
-          products.map(({ title, price, thumbnail, id }) => (
-            <div key={ id } data-testid="product">
-              <p>{title}</p>
-              <img src={ thumbnail } alt={ title } />
-              <p>{price}</p>
+          products.map((product) => (
+            <div key={ product.id } data-testid="product">
+              <Link
+                to={ `/productDetails/${product.id}` }
+                data-testid="product-detail-link"
+              >
+                <p>{product.title}</p>
+                <img src={ product.thumbnail } alt={ product.title } />
+                <p>{product.price}</p>
+              </Link>
             </div>
           ))
         ) : 'Nenhum produto foi encontrado'}
