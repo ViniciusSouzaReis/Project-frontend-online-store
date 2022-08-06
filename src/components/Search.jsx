@@ -1,34 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Search extends Component {
   state = {
     searchValue: '',
-    products: [],
-  }
-
-  onInputChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
+    products: ['a'],
   }
 
   handleChangeButton = async () => {
-    const { searchValue } = this.state;
+    const { searchValue } = this.props;
+    this.setState({ searchValue });
     const response = await getProductsFromCategoryAndQuery(searchValue);
     this.setState({ products: response.results });
   }
 
   render() {
     const { searchValue, products } = this.state;
+    const { onInputChange } = this.props;
     return (
       <div>
         <input
           type="text"
           name="searchValue"
-          onChange={ this.onInputChange }
+          onChange={ onInputChange }
           data-testid="query-input"
         />
         {!searchValue
@@ -46,13 +42,14 @@ export default class Search extends Component {
           Pesquisar
         </button>
         {products.length === 0 ? (<span>Nenhum produto foi encontrado</span>) : (
-          products.map(({ title, price, thumbnail, id }) => (
-            <div key={ id } data-testid="product">
-              <p>{title}</p>
-              <img src={ thumbnail } alt={ title } />
-              <p>{price}</p>
-            </div>
-          ))
+          products[0] !== 'a' && (
+            products.map(({ title, price, thumbnail, id }) => (
+              <div key={ id } data-testid="product">
+                <p>{title}</p>
+                <img src={ thumbnail } alt={ title } />
+                <p>{price}</p>
+              </div>
+            )))
         )}
         <Link
           data-testid="shopping-cart-button"
@@ -65,3 +62,8 @@ export default class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+  onInputChange: PropTypes.func.isRequired,
+  searchValue: PropTypes.string.isRequired,
+};
