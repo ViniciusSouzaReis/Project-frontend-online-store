@@ -4,7 +4,6 @@ export async function getCategories(param) {
 
   const response = await fetch(url);
   const data = await response.json();
-  console.log('teste');
   console.log(url);
   return data;
 }
@@ -15,7 +14,6 @@ export async function getProductsFromCategoryAndQuery(id, categories = 'MLB') {
 
   const response = await fetch(url2);
   const data = await response.json();
-  console.log('POORRAAAAA');
   return data;
 }
 
