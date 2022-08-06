@@ -27,6 +27,7 @@ export default class Search extends Component {
           onChange={ onInputChange }
           data-testid="query-input"
         />
+
         {!searchValue
           && (
             <span
@@ -34,6 +35,7 @@ export default class Search extends Component {
             >
               Digite algum termo de pesquisa ou escolha uma categoria.
             </span>)}
+
         <button
           type="button"
           data-testid="query-button"
