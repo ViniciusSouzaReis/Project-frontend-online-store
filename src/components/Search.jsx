@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import ProductCard from './ProductCard';
 
 export default class Search extends Component {
   state = {
     searchValue: '',
-    products: ['a'],
   }
 
   handleChangeButton = async () => {
@@ -41,16 +41,7 @@ export default class Search extends Component {
         >
           Pesquisar
         </button>
-        {products.length === 0 ? (<span>Nenhum produto foi encontrado</span>) : (
-          products[0] !== 'a' && (
-            products.map(({ title, price, thumbnail, id }) => (
-              <div key={ id } data-testid="product">
-                <p>{title}</p>
-                <img src={ thumbnail } alt={ title } />
-                <p>{price}</p>
-              </div>
-            )))
-        )}
+        {products && <ProductCard products={ products } />}
         <Link
           data-testid="shopping-cart-button"
           to="/shoppingcart"

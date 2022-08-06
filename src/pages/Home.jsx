@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Categories from '../components/Categories';
+import ProductCard from '../components/ProductCard';
 import Search from '../components/Search';
 import { getCategories } from '../services/api';
 
 export default class Home extends Component {
   state = {
     searchValue: '',
-    categoryList: ['a'],
   }
 
   async componentDidMount() {
@@ -37,17 +37,7 @@ export default class Home extends Component {
           ))}
         </div>
 
-        {categoryList.length === 0 ? (<span>Nenhum produto foi encontrado</span>) : (
-          categoryList[0] !== 'a' && (
-            categoryList.map(({ title, price, thumbnail, id }) => (
-
-              <div key={ id } data-testid="product">
-                <p>{title}</p>
-                <img src={ thumbnail } alt={ title } />
-                <p>{price}</p>
-              </div>
-            )))
-        )}
+        {categoryList && <ProductCard products={ categoryList } />}
 
         <Search
           onInputChange={ this.onInputChange }
