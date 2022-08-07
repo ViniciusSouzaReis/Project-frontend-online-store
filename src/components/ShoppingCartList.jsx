@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import { getProductsCard } from '../services/test';
 
 export default class ShoppingCartList extends Component {
   state = {
   }
 
   componentDidMount() {
-    const result = JSON.parse(localStorage.getItem('shoppingList'));
-    this.setState({ shoppingList: result });
-    console.log(this.checkCount(result));
+    const productList = getProductsCard();
+    if (productList.length > 0) {
+      this.setState({ shoppingList: productList, quantity: productList.length });
+    }
   }
 
   render() {
-    const { shoppingList } = this.state;
+    const { shoppingList, quantity } = this.state;
     return (
       <div>
         {!shoppingList
@@ -20,11 +22,10 @@ export default class ShoppingCartList extends Component {
             <ul>
               {shoppingList.map((item) => (
                 <li
-                  data-testid="shopping-cart-product-name"
                   key={ item.id }
                 >
+                  <span data-testid="shopping-cart-product-quantity">{quantity}</span>
                   <span data-testid="shopping-cart-product-name">{item.name}</span>
-                  <span data-testid="shopping-cart-product-quantity">{item.count}</span>
                 </li>
               ))}
             </ul>

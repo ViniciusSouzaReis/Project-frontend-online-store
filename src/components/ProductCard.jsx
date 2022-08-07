@@ -1,53 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { addProduct } from '../services/test';
 
-const newArray = [];
 export default class ProductCard extends Component {
   state = {
-    shoppingList: [],
-    count: 1,
   }
 
   componentDidMount() {
-    const result = JSON.parse(localStorage.getItem('shoppingList'));
-    this.setState({ storageShoppingList: result });
+
   }
 
-  handleButtonClick = (product) => {
-    const { shoppingList, count, storageShoppingList } = this.state;
-    const checkReapet = shoppingList.some((item) => item.id === product.id);
-
-    if (!checkReapet) {
-      console.log('primeiro if');
-      const newObj = {
-        name: product.title,
-        image: product.thumbnail,
-        id: product.id,
-        count,
-      };
-      newArray.push(newObj);
-      localStorage.setItem('shoppingList', JSON.stringify(newArray));
-    }
-
-    if (checkReapet) {
-      const repeat = storageShoppingList.filter((item) => item.id === product.id);
-      console.log(repeat[0].name);
-      const newObj = {
-        name: repeat[0].name,
-        image: repeat[0].image,
-        count: repeat[0].count += 1,
-        id: repeat[0].id,
-      };
-      const lastIndex = -1;
-      newArray.push(newObj);
-      const result = newArray.filter((item) => item.id === newObj.id);
-      localStorage.setItem('shoppingList', JSON.stringify(result.at(lastIndex)));
-    }
-
-    this.setState((prevState) => ({
-      shoppingList: [...prevState.shoppingList, product] }
-    ));
+  handleButtonClick = ({ thumbnail, title, id }) => {
+    const obj = { id, name: title, image: thumbnail, count: 1 };
+    addProduct(obj);
   }
 
   render() {
