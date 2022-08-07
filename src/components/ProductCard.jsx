@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { addProduct } from '../services/test';
 
 export default class ProductCard extends Component {
+  state = {
+  }
+
+  componentDidMount() {
+
+  }
+
+  handleButtonClick = ({ thumbnail, title, id }) => {
+    const obj = { id, name: title, image: thumbnail, count: 1 };
+    addProduct(obj);
+  }
+
   render() {
     const { products } = this.props;
     return (
@@ -18,6 +31,13 @@ export default class ProductCard extends Component {
                 <img src={ product.thumbnail } alt={ product.title } />
                 <p>{product.price}</p>
               </Link>
+              <button
+                type="button"
+                data-testid="product-add-to-cart"
+                onClick={ () => this.handleButtonClick(product) }
+              >
+                Adicionar ao carrinho
+              </button>
             </div>
           ))
         ) : 'Nenhum produto foi encontrado'}
