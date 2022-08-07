@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import ShoppingCartList from './components/ShoppingCartList';
+import ProductDetails from './pages/ProductDetails';
 
 export default class App extends Component {
   state = {
@@ -14,6 +15,7 @@ export default class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Home } />
+          <Route exact path="/productDetails/:id" component={ ProductDetails } />
           <Route
             exact
             path="/shoppingcart"
