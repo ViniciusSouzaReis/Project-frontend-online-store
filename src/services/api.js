@@ -4,7 +4,6 @@ export async function getCategories(param) {
 
   const response = await fetch(url);
   const data = await response.json();
-  console.log(url);
   return data;
 }
 
