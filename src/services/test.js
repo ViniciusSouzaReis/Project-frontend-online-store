@@ -1,4 +1,3 @@
-// teste
 const PRODUCT_KEY = 'shoppingList';
 
 if (!JSON.parse(localStorage.getItem(PRODUCT_KEY))) {
@@ -37,7 +36,6 @@ export const addProduct = (product) => {
 export const removeProduct = (product, secondParam = 'quantity') => {
   const favoriteProducts = readProductCard();
   if (secondParam === 'remove') {
-    console.log(product);
     saveProductCard(favoriteProducts
       .filter((myProduct) => myProduct.id !== product.id));
   } else {
