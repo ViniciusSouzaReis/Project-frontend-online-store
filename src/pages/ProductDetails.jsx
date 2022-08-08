@@ -9,15 +9,14 @@ import { addAvaliation, getListAvaliation } from '../services/avaliationLocalSto
 export default class ProductDetails extends Component {
   state = {
     email: '',
-    textarea: '',
-    evaluationList: [],
+    text: '',
   }
 
   componentDidMount = async () => {
     const { match: { params: { id } } } = this.props;
-    const evaluationList = getListAvaliation();
     const productDetails = await getDetails(id);
-    this.setState({ productDetails, evaluationList });
+    const listAvaliation = getListAvaliation(id);
+    this.setState({ productDetails, listAvaliation });
   }
 
   handleClickButton = () => {
@@ -29,16 +28,17 @@ export default class ProductDetails extends Component {
 
   handleClickForm = (event) => {
     event.preventDefault();
-    const { email, textarea, radio } = this.state;
-    const obj = { email, textarea, radio };
-    addAvaliation(obj);
+    const { email, text, rating } = this.state;
+    const obj = { email, text, rating };
+    const { match: { params: { id } } } = this.props;
+    addAvaliation(id, obj);
     this.setState({
       emailEvaluation: email,
-      textAreaEvaluation: textarea,
-      radioEvaluator: radio,
+      textAreaEvaluation: text,
+      radioEvaluator: rating,
       email: '',
-      textarea: '',
-      radio: '',
+      text: '',
+      rating: '',
     });
   }
 
@@ -51,11 +51,11 @@ export default class ProductDetails extends Component {
     const {
       productDetails,
       email,
-      textarea,
+      text,
       emailEvaluation,
       textAreaEvaluation,
       radioEvaluator,
-      evaluationList,
+      listAvaliation,
     } = this.state;
     return (
       <div>
@@ -97,35 +97,35 @@ export default class ProductDetails extends Component {
             </label>
             <input
               type="radio"
-              name="radio"
+              name="rating"
               value="1"
               data-testid="1-rating"
               onChange={ this.onInputChange }
             />
             <input
               type="radio"
-              name="radio"
+              name="rating"
               value="2"
               data-testid="2-rating"
               onChange={ this.onInputChange }
             />
             <input
               type="radio"
-              name="radio"
+              name="rating"
               value="3"
               data-testid="3-rating"
               onChange={ this.onInputChange }
             />
             <input
               type="radio"
-              name="radio"
+              name="rating"
               value="4"
               data-testid="4-rating"
               onChange={ this.onInputChange }
             />
             <input
               type="radio"
-              name="radio"
+              name="rating"
               value="5"
               data-testid="5-rating"
               onChange={ this.onInputChange }
@@ -133,11 +133,11 @@ export default class ProductDetails extends Component {
             <label htmlFor="text">
               <textarea
                 type="text"
-                name="textarea"
+                name="text"
                 data-testid="product-detail-evaluation"
                 onChange={ this.onInputChange }
                 id="text"
-                value={ textarea }
+                value={ text }
               />
             </label>
             <button
@@ -147,6 +147,14 @@ export default class ProductDetails extends Component {
             >
               Enviar
             </button>
+            { listAvaliation && (
+              listAvaliation.map((avaliation, index) => (
+                <div key={ index }>
+                  <span data-testid="review-card-email">{avaliation.email}</span>
+                  <span data-testid="review-card-evaluation">{avaliation.text}</span>
+                  <span data-testid="review-card-rating">{avaliation.rating}</span>
+                </div>
+              )))}
           </form>
           { emailEvaluation
             && <ProductAvaliation
@@ -154,18 +162,6 @@ export default class ProductDetails extends Component {
               comment={ textAreaEvaluation }
               radio={ radioEvaluator }
             />}
-          { evaluationList && (
-            <div>
-              { evaluationList.map((evaluation, index) => (
-                <ProductAvaliation
-                  key={ index }
-                  email={ evaluation.email }
-                  comment={ evaluation.textarea }
-                  radio={ evaluation.radio }
-                />
-              ))}
-            </div>
-          )}
         </div>
       </div>
     );

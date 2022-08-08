@@ -22,9 +22,9 @@ export default class ProductAvaliation extends Component {
     return (
       validationReturn ? (
         <div>
-          <span data-testid="review-card-email">{email}</span>
-          <span data-testid="review-card-evaluation">{comment}</span>
-          <span data-testid="review-card-rating">{radio}</span>
+          <span>{email}</span>
+          <span>{comment}</span>
+          <span>{radio}</span>
         </div>
       ) : <span data-testid="error-msg">Campos inválidos</span>
     );
