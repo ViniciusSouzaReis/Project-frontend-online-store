@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getDetails } from '../services/api';
 import { addProduct } from '../services/localStorage';
+import ProductAvaliation from '../components/ProductAvaliation';
 
 export default class ProductDetails extends Component {
   state = {
-
+    email: '',
+    textarea: '',
   }
 
   componentDidMount = async () => {
@@ -22,8 +24,33 @@ export default class ProductDetails extends Component {
     addProduct(obj);
   }
 
+  handleClickForm = (event) => {
+    event.preventDefault();
+    const { email, textarea, radio } = this.state;
+    this.setState({
+      emailEvaluation: email,
+      textAreaEvaluation: textarea,
+      radioEvaluator: radio,
+      email: '',
+      textarea: '',
+      radio: '',
+    });
+  }
+
+  onInputChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
   render() {
-    const { productDetails } = this.state;
+    const {
+      productDetails,
+      email,
+      textarea,
+      emailEvaluation,
+      textAreaEvaluation,
+      radioEvaluator,
+    } = this.state;
     return (
       <div>
         { productDetails && (
@@ -48,6 +75,78 @@ export default class ProductDetails extends Component {
             >
               Carrinho de compras
             </Link>
+            <div>
+              <form>
+                <label htmlFor="email">
+                  <input
+                    type="email"
+                    data-testid="product-detail-email"
+                    name="email"
+                    onChange={ this.onInputChange }
+                    value={ email }
+                    id="email"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="radio"
+                  value="1"
+                  data-testid="1-rating"
+                  onChange={ this.onInputChange }
+                />
+                <input
+                  type="radio"
+                  name="radio"
+                  value="2"
+                  data-testid="2-rating"
+                  onChange={ this.onInputChange }
+                />
+                <input
+                  type="radio"
+                  name="radio"
+                  value="3"
+                  data-testid="3-rating"
+                  onChange={ this.onInputChange }
+                />
+                <input
+                  type="radio"
+                  name="radio"
+                  value="4"
+                  data-testid="4-rating"
+                  onChange={ this.onInputChange }
+                />
+                <input
+                  type="radio"
+                  name="radio"
+                  value="5"
+                  data-testid="5-rating"
+                  onChange={ this.onInputChange }
+                />
+                <label htmlFor="text">
+                  <textarea
+                    type="text"
+                    name="textarea"
+                    data-testid="product-detail-evaluation"
+                    onChange={ this.onInputChange }
+                    id="text"
+                    value={ textarea }
+                  />
+                </label>
+                <button
+                  type="submit"
+                  data-testid="submit-review-btn"
+                  onClick={ this.handleClickForm }
+                >
+                  Enviar
+                </button>
+              </form>
+              { emailEvaluation
+                && <ProductAvaliation
+                  email={ emailEvaluation }
+                  comment={ textAreaEvaluation }
+                  radio={ radioEvaluator }
+                />}
+            </div>
           </div>
         )}
       </div>
