@@ -3,16 +3,16 @@ const PRODUCT_KEY = 'avaliationList';
 if (!JSON.parse(localStorage.getItem(PRODUCT_KEY))) {
   localStorage.setItem(PRODUCT_KEY, JSON.stringify([]));
 }
-const readProductCard = () => JSON.parse(localStorage.getItem(PRODUCT_KEY));
+const readProductCard = (id) => JSON.parse(localStorage.getItem(id)) || [];
 
-const saveProductCard = (product) => localStorage
-  .setItem(PRODUCT_KEY, JSON.stringify(product));
+const saveProductCard = (id, product) => localStorage
+  .setItem(id, JSON.stringify(product));
 
-export const getListAvaliation = () => readProductCard();
+export const getListAvaliation = (id) => readProductCard(id);
 
-export const addAvaliation = (product) => {
+export const addAvaliation = (id, product) => {
   if (product) {
-    const favoriteProducts = readProductCard();
-    saveProductCard([...favoriteProducts, product]);
+    const favoriteProducts = readProductCard(id);
+    saveProductCard(id, [...favoriteProducts, product]);
   }
 };
