@@ -13,11 +13,11 @@ export const getProductsCard = () => readProductCard();
 
 export const addProduct = (product) => {
   if (product) {
-    const favoriteSongs = readProductCard();
-    saveProductCard([...favoriteSongs, product]);
-    const repeatsProducts = favoriteSongs.filter((e) => e.id === product.id);
+    const favoriteProducts = readProductCard();
+    saveProductCard([...favoriteProducts, product]);
+    const repeatsProducts = favoriteProducts.filter((e) => e.id === product.id);
     if (repeatsProducts.length > 0) {
-      const noRepeats = favoriteSongs.filter((myProduct) => myProduct.id !== product.id);
+      const noRepeats = favoriteProducts.filter((myProd) => myProd.id !== product.id);
       const countProduct = repeatsProducts.reduce((acc, curr) => {
         acc = {
           id: curr.id,
@@ -29,13 +29,13 @@ export const addProduct = (product) => {
       }, {});
       saveProductCard([...noRepeats, countProduct]);
     } else {
-      saveProductCard([...favoriteSongs, product]);
+      saveProductCard([...favoriteProducts, product]);
     }
   }
 };
 
-export const removeSong = (product) => {
-  const favoriteSongs = readProductCard();
-  saveProductCard(favoriteSongs
+export const removeProduct = (product) => {
+  const favoriteProducts = readProductCard();
+  saveProductCard(favoriteProducts
     .filter((myProduct) => myProduct.id !== product.id));
 };
