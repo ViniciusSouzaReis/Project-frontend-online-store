@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { addProduct } from '../services/test';
+import { addProduct } from '../services/localStorage';
 
 export default class ProductCard extends Component {
   state = {

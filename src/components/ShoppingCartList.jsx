@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProductsCard, removeProduct, addProduct } from '../services/test';
+import { getProductsCard, removeProduct, addProduct } from '../services/localStorage';
 
 export default class ShoppingCartList extends Component {
   state = {
