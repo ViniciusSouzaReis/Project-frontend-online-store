@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { getProductsCard, removeProduct, addProduct } from '../services/localStorage';
 
 export default class ShoppingCartList extends Component {
@@ -37,37 +38,47 @@ export default class ShoppingCartList extends Component {
         {!shoppingList
           ? (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>)
           : (
-            <ul>
-              {shoppingList.map((item) => (
-                <li
-                  key={ item.id }
+            <div>
+              <ul>
+                {shoppingList.map((item) => (
+                  <li
+                    key={ item.id }
+                  >
+                    <span data-testid="shopping-cart-product-name">{item.name}</span>
+                    <button
+                      type="button"
+                      data-testid="product-decrease-quantity"
+                      onClick={ () => this.handleClickDecrease(item) }
+                    >
+                      -
+                    </button>
+                    <span data-testid="shopping-cart-product-quantity">{item.count}</span>
+                    <button
+                      type="button"
+                      data-testid="product-increase-quantity"
+                      onClick={ () => this.handleClickIncrease(item) }
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      data-testid="remove-product"
+                      onClick={ () => this.handleClickRemove(item) }
+                    >
+                      Remover item do carrinho
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              { shoppingList && (
+                <Link
+                  to="/checkout"
+                  data-testid="checkout-products"
                 >
-                  <span data-testid="shopping-cart-product-name">{item.name}</span>
-                  <button
-                    type="button"
-                    data-testid="product-decrease-quantity"
-                    onClick={ () => this.handleClickDecrease(item) }
-                  >
-                    -
-                  </button>
-                  <span data-testid="shopping-cart-product-quantity">{item.count}</span>
-                  <button
-                    type="button"
-                    data-testid="product-increase-quantity"
-                    onClick={ () => this.handleClickIncrease(item) }
-                  >
-                    +
-                  </button>
-                  <button
-                    type="button"
-                    data-testid="remove-product"
-                    onClick={ () => this.handleClickRemove(item) }
-                  >
-                    Remover item do carrinho
-                  </button>
-                </li>
-              ))}
-            </ul>
+                  Finalizar Compra
+                </Link>
+              )}
+            </div>
           )}
       </div>
     );
