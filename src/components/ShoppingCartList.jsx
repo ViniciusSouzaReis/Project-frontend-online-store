@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProductsCard, removeProduct } from '../services/test';
+import { getProductsCard, removeProduct, addProduct } from '../services/localStorage';
 
 export default class ShoppingCartList extends Component {
   state = {
@@ -8,23 +8,30 @@ export default class ShoppingCartList extends Component {
   componentDidMount() {
     const productList = getProductsCard();
     if (productList.length > 0) {
-      this.setState({ shoppingList: productList, quantity: productList.length });
+      this.setState({ shoppingList: productList });
     }
   }
 
-  handleClickButton = (param) => {
-    removeProduct(param);
-    const { shoppingList } = this.state;
-    const newProducts = shoppingList.filter((item) => item.id !== param.id);
-    this.setState({ shoppingList: newProducts });
+  handleClickRemove = (param) => {
+    removeProduct(param, 'remove');
+    const productList = getProductsCard();
+    this.setState({ shoppingList: productList });
   }
 
-  handleClickDecrease = () => {
-    console.log('a');
+  handleClickIncrease = (item) => {
+    addProduct(item);
+    const productList = getProductsCard();
+    this.setState({ shoppingList: productList });
+  }
+
+  handleClickDecrease = (item) => {
+    removeProduct(item);
+    const productList = getProductsCard();
+    this.setState({ shoppingList: productList });
   }
 
   render() {
-    const { shoppingList, quantity } = this.state;
+    const { shoppingList } = this.state;
     return (
       <div>
         {!shoppingList
@@ -35,26 +42,26 @@ export default class ShoppingCartList extends Component {
                 <li
                   key={ item.id }
                 >
-                  <span data-testid="shopping-cart-product-quantity">{quantity}</span>
                   <span data-testid="shopping-cart-product-name">{item.name}</span>
                   <button
                     type="button"
                     data-testid="product-decrease-quantity"
-                    onClick={ this.handleClickDecrease }
+                    onClick={ () => this.handleClickDecrease(item) }
                   >
                     -
                   </button>
-                  {item.count}
+                  <span data-testid="shopping-cart-product-quantity">{item.count}</span>
                   <button
                     type="button"
                     data-testid="product-increase-quantity"
+                    onClick={ () => this.handleClickIncrease(item) }
                   >
                     +
                   </button>
                   <button
                     type="button"
                     data-testid="remove-product"
-                    onClick={ () => this.handleClickButton(item) }
+                    onClick={ () => this.handleClickRemove(item) }
                   >
                     Remover item do carrinho
                   </button>

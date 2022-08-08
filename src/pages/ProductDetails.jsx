@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getDetails } from '../services/api';
-import { addProduct } from '../services/test';
+import { addProduct } from '../services/localStorage';
 
 export default class ProductDetails extends Component {
   state = {

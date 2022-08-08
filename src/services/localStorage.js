@@ -1,4 +1,3 @@
-// teste
 const PRODUCT_KEY = 'shoppingList';
 
 if (!JSON.parse(localStorage.getItem(PRODUCT_KEY))) {
@@ -34,8 +33,26 @@ export const addProduct = (product) => {
   }
 };
 
-export const removeProduct = (product) => {
+export const removeProduct = (product, secondParam = 'quantity') => {
   const favoriteProducts = readProductCard();
-  saveProductCard(favoriteProducts
-    .filter((myProduct) => myProduct.id !== product.id));
+  if (secondParam === 'remove') {
+    saveProductCard(favoriteProducts
+      .filter((myProduct) => myProduct.id !== product.id));
+  } else {
+    const productDecrease = favoriteProducts.filter((e) => e.id === product.id);
+    const noRepeats = favoriteProducts.filter((myProd) => myProd.id !== product.id);
+    const countProduct = productDecrease.reduce((acc, curr) => {
+      acc = {
+        id: curr.id,
+        name: curr.name,
+        image: curr.image,
+        count: curr.count - 1,
+      };
+      return acc;
+    }, {});
+    if (countProduct.count === 0) {
+      saveProductCard(favoriteProducts
+        .filter((myProduct) => myProduct.id !== product.id));
+    } else saveProductCard([...noRepeats, countProduct]);
+  }
 };
