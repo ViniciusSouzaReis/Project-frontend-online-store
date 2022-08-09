@@ -9,7 +9,7 @@ export default class ShoppingCartList extends Component {
 
   componentDidMount() {
     const productList = getProductsCard();
-    if (productList.length > 0) {
+    if (productList) {
       this.setState({ shoppingList: productList });
     }
   }
