@@ -77,7 +77,7 @@ export default class ShoppingCartList extends Component {
                   to="/checkout"
                   data-testid="checkout-products"
                 >
-                  Finalizar Compra
+                  Finalizar Compras
                 </Link>
               )}
             </div>
