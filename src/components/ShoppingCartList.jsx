@@ -4,6 +4,7 @@ import { getProductsCard, removeProduct, addProduct } from '../services/localSto
 
 export default class ShoppingCartList extends Component {
   state = {
+    shoppingList: [],
   }
 
   componentDidMount() {
@@ -33,9 +34,10 @@ export default class ShoppingCartList extends Component {
 
   render() {
     const { shoppingList } = this.state;
+    console.log(shoppingList);
     return (
       <div>
-        {!shoppingList
+        {shoppingList.length === 0
           ? (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>)
           : (
             <div>
