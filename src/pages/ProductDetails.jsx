@@ -25,8 +25,8 @@ export default class ProductDetails extends Component {
 
   handleClickButton = () => {
     const { productDetails } = this.state;
-    const { title, thumbnail, id } = productDetails;
-    const obj = { id, name: title, image: thumbnail, count: 1 };
+    const { title, thumbnail, id, availableQuantity } = productDetails;
+    const obj = { id, name: title, image: thumbnail, count: 1, availableQuantity };
     addProduct(obj);
   }
 
@@ -62,7 +62,6 @@ export default class ProductDetails extends Component {
       listAvaliation,
       checkLengthProductList,
     } = this.state;
-    console.log(checkLengthProductList);
     return (
       <div>
         <p data-testid="shopping-cart-size">{checkLengthProductList}</p>

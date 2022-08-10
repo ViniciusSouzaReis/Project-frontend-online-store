@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getProductsCard, removeProduct, addProduct } from '../services/localStorage';
 
-export default class ShoppingCartList extends Component {
+export default class ShoppingCart extends Component {
   state = {
     shoppingList: [],
   }
