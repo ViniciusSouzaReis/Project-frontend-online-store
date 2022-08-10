@@ -3,6 +3,7 @@ import Categories from '../components/Categories';
 import ProductCard from '../components/ProductCard';
 import Search from '../components/Search';
 import { getCategories } from '../services/api';
+import { getProductsCard, addProduct } from '../services/localStorage';
 
 export default class Home extends Component {
   state = {
@@ -10,8 +11,10 @@ export default class Home extends Component {
   }
 
   async componentDidMount() {
+    const productList = getProductsCard();
+    const checkLengthProductList = productList ? productList.length : 0;
     const allCategories = await getCategories();
-    this.setState({ allCategories });
+    this.setState({ allCategories, checkLengthProductList });
   }
 
   onInputChange = async ({ target }) => {
@@ -23,10 +26,20 @@ export default class Home extends Component {
     }
   }
 
+  handleButtonClickProduct = ({ thumbnail, title, id }) => {
+    const obj = { id, name: title, image: thumbnail, count: 1 };
+    addProduct(obj);
+    const productList = getProductsCard();
+    const checkLengthProductList = productList ? productList.length : 0;
+    this.setState({ checkLengthProductList });
+  }
+
   render() {
-    const { allCategories, searchValue, categoryList } = this.state;
+    const {
+      allCategories, searchValue, categoryList, checkLengthProductList } = this.state;
     return (
       <div>
+        <p data-testid="shopping-cart-size">{checkLengthProductList}</p>
         <div>
           { allCategories && allCategories.map((category) => (
             <Categories
@@ -37,7 +50,11 @@ export default class Home extends Component {
           ))}
         </div>
 
-        {categoryList && <ProductCard products={ categoryList } />}
+        {categoryList && (
+          <ProductCard
+            products={ categoryList }
+            handleButtonClickProduct={ this.handleButtonClickProduct }
+          />)}
 
         <Search
           onInputChange={ this.onInputChange }

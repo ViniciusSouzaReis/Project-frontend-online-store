@@ -1,23 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { addProduct } from '../services/localStorage';
 
 export default class ProductCard extends Component {
-  state = {
-  }
-
-  componentDidMount() {
-
-  }
-
-  handleButtonClick = ({ thumbnail, title, id }) => {
-    const obj = { id, name: title, image: thumbnail, count: 1 };
-    addProduct(obj);
-  }
-
   render() {
-    const { products } = this.props;
+    const { products, handleButtonClickProduct } = this.props;
     return (
       <div>
         {products.length > 0 ? (
@@ -34,7 +21,7 @@ export default class ProductCard extends Component {
               <button
                 type="button"
                 data-testid="product-add-to-cart"
-                onClick={ () => this.handleButtonClick(product) }
+                onClick={ () => handleButtonClickProduct(product) }
               >
                 Adicionar ao carrinho
               </button>
@@ -48,4 +35,5 @@ export default class ProductCard extends Component {
 
 ProductCard.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  handleButtonClickProduct: PropTypes.func.isRequired,
 };

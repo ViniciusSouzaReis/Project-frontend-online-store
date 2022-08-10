@@ -8,7 +8,7 @@ export default class Checkout extends Component {
 
   componentDidMount() {
     const productList = getProductsCard();
-    if (productList.length > 0) {
+    if (productList) {
       this.setState({ productList });
     }
   }
@@ -21,25 +21,9 @@ export default class Checkout extends Component {
 
   handleClickSubmit = (event) => {
     event.preventDefault();
-    const {
-      fullName,
-      email,
-      cpf,
-      tellphone,
-      cep,
-      address,
-      nameInput,
-    } = this.state;
+    const { fullName, email, cpf, tellphone, cep, address, nameInput } = this.state;
     const { history } = this.props;
-    const test = [
-      fullName,
-      email,
-      cpf,
-      tellphone,
-      cep,
-      address,
-      nameInput,
-    ];
+    const test = [fullName, email, cpf, tellphone, cep, address, nameInput];
     const checkInputs = test.some((item) => item === '' || item === undefined);
     this.setState({ errorMessage: checkInputs });
     if (!checkInputs) {
@@ -49,16 +33,7 @@ export default class Checkout extends Component {
   }
 
   render() {
-    const {
-      productList,
-      fullName,
-      email,
-      cpf,
-      tellphone,
-      cep,
-      address,
-      errorMessage,
-    } = this.state;
+    const { productList, errorMessage } = this.state;
     return (
       <div>
         <ul>
@@ -70,42 +45,36 @@ export default class Checkout extends Component {
           <input
             type="text"
             name="fullName"
-            value={ fullName }
             onChange={ this.handleInputChange }
             data-testid="checkout-fullname"
           />
           <input
             type="email"
             name="email"
-            value={ email }
             onChange={ this.handleInputChange }
             data-testid="checkout-email"
           />
           <input
             type="text"
             name="cpf"
-            value={ cpf }
             onChange={ this.handleInputChange }
             data-testid="checkout-cpf"
           />
           <input
             type="text"
             name="tellphone"
-            value={ tellphone }
             onChange={ this.handleInputChange }
             data-testid="checkout-phone"
           />
           <input
             type="text"
             name="cep"
-            value={ cep }
             onChange={ this.handleInputChange }
             data-testid="checkout-cep"
           />
           <input
             type="text"
             name="address"
-            value={ address }
             onChange={ this.handleInputChange }
             data-testid="checkout-address"
           />

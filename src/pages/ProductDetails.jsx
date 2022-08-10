@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getDetails } from '../services/api';
-import { addProduct } from '../services/localStorage';
+import { addProduct, getProductsCard } from '../services/localStorage';
 import ProductAvaliation from '../components/ProductAvaliation';
 import { addAvaliation, getListAvaliation } from '../services/avaliationLocalStorage';
 
@@ -14,6 +14,10 @@ export default class ProductDetails extends Component {
 
   componentDidMount = async () => {
     const { match: { params: { id } } } = this.props;
+    const productList = getProductsCard();
+    const checkLengthProductList = productList ? productList
+      .reduce((acc, curr) => (acc + curr.count), 0) : 0;
+    this.setState({ checkLengthProductList });
     const productDetails = await getDetails(id);
     const listAvaliation = getListAvaliation(id);
     this.setState({ productDetails, listAvaliation });
@@ -56,9 +60,12 @@ export default class ProductDetails extends Component {
       textAreaEvaluation,
       radioEvaluator,
       listAvaliation,
+      checkLengthProductList,
     } = this.state;
+    console.log(checkLengthProductList);
     return (
       <div>
+        <p data-testid="shopping-cart-size">{checkLengthProductList}</p>
         { productDetails && (
           <div>
             <p data-testid="product-detail-name">{productDetails.title}</p>

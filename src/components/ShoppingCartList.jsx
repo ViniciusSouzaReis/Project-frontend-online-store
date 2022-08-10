@@ -34,7 +34,6 @@ export default class ShoppingCartList extends Component {
 
   render() {
     const { shoppingList } = this.state;
-    console.log(shoppingList);
     return (
       <div>
         {shoppingList.length === 0
