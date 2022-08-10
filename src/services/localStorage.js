@@ -18,11 +18,17 @@ export const addProduct = (product) => {
     if (repeatsProducts.length > 0) {
       const noRepeats = favoriteProducts.filter((myProd) => myProd.id !== product.id);
       const countProduct = repeatsProducts.reduce((acc, curr) => {
+        let limitedCount = curr.count + 1;
+        if (curr.availableQuantity) {
+          limitedCount = curr.count < curr.availableQuantity
+            ? curr.count += 1 : curr.availableQuantity;
+        }
         acc = {
           id: curr.id,
           name: curr.name,
           image: curr.image,
-          count: curr.count += 1,
+          count: limitedCount,
+          availableQuantity: curr.availableQuantity,
         };
         return acc;
       }, {});
