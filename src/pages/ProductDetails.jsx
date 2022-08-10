@@ -27,7 +27,6 @@ export default class ProductDetails extends Component {
     const { productDetails } = this.state;
     const { title, thumbnail, id, availableQuantity } = productDetails;
     const obj = { id, name: title, image: thumbnail, count: 1, availableQuantity };
-    console.log(obj);
     addProduct(obj);
   }
 

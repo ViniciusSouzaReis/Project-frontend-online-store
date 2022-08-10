@@ -21,7 +21,6 @@ export default class ShoppingCart extends Component {
   }
 
   handleClickIncrease = (item) => {
-    console.log(item);
     addProduct(item);
     const productList = getProductsCard();
     this.setState({ shoppingList: productList });

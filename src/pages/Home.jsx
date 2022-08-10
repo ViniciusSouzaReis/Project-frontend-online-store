@@ -29,7 +29,6 @@ export default class Home extends Component {
   handleButtonClickProduct = ({
     thumbnail, title, id, available_quantity: availableQuantity }) => {
     const obj = { id, name: title, image: thumbnail, count: 1, availableQuantity };
-    console.log(obj);
     addProduct(obj);
     const productList = getProductsCard();
     const checkLengthProductList = productList ? productList.length : 0;
