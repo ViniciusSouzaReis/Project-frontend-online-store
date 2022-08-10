@@ -17,6 +17,12 @@ export default class ProductCard extends Component {
                 <p>{product.title}</p>
                 <img src={ product.thumbnail } alt={ product.title } />
                 <p>{product.price}</p>
+                {product.shipping.free_shipping && (
+                  <p
+                    data-testid="free-shipping"
+                  >
+                    Frete Grátis
+                  </p>)}
               </Link>
               <button
                 type="button"
